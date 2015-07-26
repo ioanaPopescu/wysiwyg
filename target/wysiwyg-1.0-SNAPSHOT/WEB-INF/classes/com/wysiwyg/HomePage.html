@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <select wicket:id="font">
+                <option>Font</option>
+            </select>
+        </td>
+        <td>
+            <select wicket:id="size">
+                <option>Size</option>
+            </select>
+        </td>
+        <td>
+            <input wicket:id="boldButton" type="submit" value="B">
+        </td>
+        <td>
+            <input wicket:id="italicButton" type="submit" value="I">
+        </td>
+        <td>
+            <input wicket:id="underlineButton" type="button" value="U">
+        </td>
+    </tr>
+    <tr>
+        <textarea wicket:id="uiText" rows="10" cols="100"></textarea>
+    </tr>
+</table>
+</body>
+</html>
