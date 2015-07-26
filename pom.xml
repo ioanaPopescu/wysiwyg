@@ -10,11 +10,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <wicket.version>6.20.0</wicket.version>
         <spring-core.version>4.1.7.RELEASE</spring-core.version>
-        <hibernate.version>4.3.10.Final</hibernate.version>
         <spring-context.version>4.0.6.RELEASE</spring-context.version>
         <spring-tx.version>4.1.6.RELEASE</spring-tx.version>
         <spring-orm.version>4.1.6.RELEASE</spring-orm.version>
+        <hibernate.version>4.3.10.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -22,8 +23,14 @@
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
-            <version>6.20.0</version>
+            <version>${wicket.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+
         <!-- log4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
