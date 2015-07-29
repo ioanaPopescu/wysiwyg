@@ -15,6 +15,7 @@
         <spring-context.version>4.0.6.RELEASE</spring-context.version>
         <spring-tx.version>4.1.6.RELEASE</spring-tx.version>
         <spring-orm.version>4.1.6.RELEASE</spring-orm.version>
+        <spring-test.version>4.1.6.RELEASE</spring-test.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
     </properties>
 
@@ -59,6 +60,12 @@
             <artifactId>spring-orm</artifactId>
             <version>${spring-orm.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-test.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Hibernate -->
         <dependency>
@@ -70,6 +77,20 @@
             <groupId>org.apache.tomcat</groupId>
             <artifactId>dbcp</artifactId>
             <version>6.0.29</version>
+        </dependency>
+
+        <!-- Junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

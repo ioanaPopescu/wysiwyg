@@ -1,6 +1,7 @@
 package com.wysiwyg;
 
 import com.wysiwyg.model.AlignmentType;
+import com.wysiwyg.model.StyleConstants;
 import com.wysiwyg.model.UIText;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,6 +36,14 @@ public class HomePage extends WebPage {
     Button alignJustify;
     TextArea uiText;
     UIText text = new UIText();
+
+    public UIText getText() {
+        return text;
+    }
+
+    public Model<String> getStyleModel() {
+        return styleModel;
+    }
 
     Model<String> styleModel = new Model<String>("");
 
@@ -151,8 +160,7 @@ public class HomePage extends WebPage {
                 new LoadableDetachableModel<List<Integer>>() {
                     @Override
                     protected List<Integer> load() {
-                        Integer[] fontSizes = {6, 8, 10, 12, 16, 20, 24, 32, 48, 72};
-                        return Arrays.asList(fontSizes);
+                        return Arrays.asList(StyleConstants.FONT_SIZES);
                     }
                 }) {
             @Override
@@ -172,30 +180,30 @@ public class HomePage extends WebPage {
     private void updateStyleModel() {
         StringBuilder builder = new StringBuilder();
         if (text.getFont() != null) {
-            builder.append("font-family:").append(text.getFont()).append(";");
+            builder.append(StyleConstants.FONT_FAMILY).append(text.getFont()).append(";");
         }
         if (text.getSize() != null) {
-            builder.append("font-size:").append(text.getSize()).append("px").append(";");
+            builder.append(StyleConstants.FONT_SIZE).append(text.getSize()).append("px").append(";");
         }
         if (text.isBold()) {
-            builder.append("font-weight:bold;");
+            builder.append(StyleConstants.BOLD);
         }
         if (text.isItalic()) {
-            builder.append("font-style: italic;");
+            builder.append(StyleConstants.ITALIC);
         }
         if (text.isUnderline()) {
-            builder.append("text-decoration: underline;");
+            builder.append(StyleConstants.UNDERLINE);
         }
 
         //TODO I want it with switch!!
         if (AlignmentType.JUSTIFY.equals(text.getAlignmentType())) {
-            builder.append("text-align: justify;");
+            builder.append(StyleConstants.JUSTIFY);
         }
         if (AlignmentType.CENTER.equals(text.getAlignmentType())) {
-            builder.append("text-align: center;");
+            builder.append(StyleConstants.CENTER);
         }
         if (AlignmentType.LEFT.equals(text.getAlignmentType()) || text.getAlignmentType() == null) {
-            builder.append("text-align: left;");
+            builder.append(StyleConstants.LEFT);
         }
         //todo the rest of the fields
         styleModel.setObject(builder.toString());
