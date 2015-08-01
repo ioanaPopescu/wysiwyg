@@ -1,19 +1,14 @@
 import com.wysiwyg.HomePage;
 import com.wysiwyg.model.StyleConstants;
-import config.ApplicationConfig;
-import org.apache.wicket.Component;
-import org.apache.wicket.Session;
-import org.apache.wicket.behavior.AttributeAppender;
+import config.ApplicationContextConfig;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,7 +20,7 @@ import static org.junit.Assert.*;
  * Created by Ioana Popescu on 7/29/2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ContextConfiguration(classes = ApplicationContextConfig.class)
 public class HomePageTest {
     private WicketTester wicketTester;
     HomePage homePage;
@@ -34,8 +29,9 @@ public class HomePageTest {
     public void setUp() {
         wicketTester = new WicketTester();
         wicketTester.startPage(HomePage.class);
-        homePage = (HomePage)wicketTester.getLastRenderedPage();
+        homePage = (HomePage) wicketTester.getLastRenderedPage();
     }
+
     @Test
     public void testRenderHomePage() {
         wicketTester.assertRenderedPage(HomePage.class);
@@ -60,7 +56,7 @@ public class HomePageTest {
         assertFalse(homePage.getText().isBold());
         FormTester formTester = wicketTester.newFormTester("form");
         formTester.setValue("boldButton", "");
-        formTester.submit() ;
+        formTester.submit();
         assertTrue(homePage.getText().isBold());
         assertTrue(homePage.getStyleModel().getObject().contains(StyleConstants.BOLD));
     }
@@ -70,16 +66,17 @@ public class HomePageTest {
         assertFalse(homePage.getText().isItalic());
         FormTester formTester = wicketTester.newFormTester("form");
         formTester.setValue("italicButton", "whatever");
-        formTester.submit() ;
+        formTester.submit();
         assertTrue(homePage.getText().isItalic());
         assertTrue(homePage.getStyleModel().getObject().contains(StyleConstants.ITALIC));
     }
+
     @Test
     public void testUnderlineButton() {
         assertFalse(homePage.getText().isUnderline());
         FormTester formTester = wicketTester.newFormTester("form");
         formTester.setValue("underlineButton", "whatever");
-        formTester.submit() ;
+        formTester.submit();
         assertTrue(homePage.getText().isUnderline());
         assertTrue(homePage.getStyleModel().getObject().contains(StyleConstants.UNDERLINE));
     }
@@ -91,6 +88,7 @@ public class HomePageTest {
         int expected = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames().length;
         assertEquals(expected, actual);
     }
+
     @Test
     public void testFontSizesPopulated() {
         DropDownChoice sizes = (DropDownChoice) wicketTester.getComponentFromLastRenderedPage("form:size");
