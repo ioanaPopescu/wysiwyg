@@ -1,6 +1,8 @@
 package com.wysiwyg.model;
 
 /**
+ * Constants used for the text style.
+ *
  * Created by Ioana Popescu on 7/30/2015.
  */
 public class StyleConstants {

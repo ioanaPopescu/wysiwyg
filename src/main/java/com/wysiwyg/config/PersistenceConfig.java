@@ -1,4 +1,4 @@
-package com.wysiwyg;
+package com.wysiwyg.config;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
@@ -46,10 +46,10 @@ public class PersistenceConfig {
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
-        dataSource.setUsername(environment.getProperty("jdbc.username"));
-        dataSource.setPassword(environment.getProperty("jdbc.password"));
+        dataSource.setDriverClassName(environment.getProperty("datasource.jdbc.driverClassName"));
+        dataSource.setUrl(environment.getProperty("datasource.jdbc.url"));
+        dataSource.setUsername(environment.getProperty("datasource.jdbc.username"));
+        dataSource.setPassword(environment.getProperty("datasource.jdbc.password"));
         return dataSource;
     }
 
@@ -64,7 +64,7 @@ public class PersistenceConfig {
     private Properties hibernateProperties() {
         return new Properties(){
             {
-                setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+                setProperty("hibernate.dialect", environment.getProperty("datasource.hibernate.dialect"));
             }
         };
     }

@@ -3,21 +3,23 @@ package com.wysiwyg;
 import com.wysiwyg.model.AlignmentType;
 import com.wysiwyg.model.StyleConstants;
 import com.wysiwyg.model.UIText;
+import com.wysiwyg.service.TextService;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.image.resource.DefaultButtonImageResource;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.IResource;
-import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.util.StringUtils;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -34,8 +36,12 @@ public class HomePage extends WebPage {
     Button alignLeft;
     Button alignCenter;
     Button alignJustify;
+    Button saveDB;
     TextArea uiText;
     UIText text = new UIText();
+
+    @SpringBean(name = "textService")
+    TextService service;
 
     public UIText getText() {
         return text;
@@ -54,6 +60,7 @@ public class HomePage extends WebPage {
     public HomePage(PageParameters parameters) {
         super(parameters);
 
+
         initializeElements();
         form = new Form("form");
 
@@ -67,6 +74,7 @@ public class HomePage extends WebPage {
         form.add(alignCenter);
         form.add(alignLeft);
         form.add(alignJustify);
+        form.add(saveDB);
         // text area
         form.add(uiText);
         add(form);
@@ -121,12 +129,29 @@ public class HomePage extends WebPage {
             }
         };
 
+        saveDB = new Button("saveDBButton") {
+            @Override
+            public void onSubmit() {
+                service.persistText(text);
+            }
+        };
+
         uiText = new TextArea<String>("uiText", Model.of(""));
         uiText.add(new AjaxFormComponentUpdatingBehavior("onkeyup") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 Object input = uiText.getConvertedInput();
-                text.setText(input == null ? "" : input.toString());
+                text.setText(StringUtils.isEmpty(input) ? "Enter text..." : input.toString());
+            }
+
+            @Override
+            protected boolean disableFocusOnBlur() {
+                return false;
+            }
+
+            @Override
+            public void onEvent(Component component, IEvent<?> event) {
+                super.onEvent(component, event);
             }
         });
     }

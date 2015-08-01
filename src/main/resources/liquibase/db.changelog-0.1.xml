@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="ioanaPopescu" id="createTextTable">
+        <createTable tableName="TEXT">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME_TEXT" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="UI_TEXT" type="varchar(50000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FONT_FAMILY" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FONT_SIZE" type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BOLD" type="bool">
+            </column>
+            <column name="ITALIC" type="bool">
+            </column>
+            <column name="UNDERLINE" type="bool">
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
