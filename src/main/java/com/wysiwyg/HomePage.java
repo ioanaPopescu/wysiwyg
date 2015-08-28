@@ -11,9 +11,10 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.ComponentFeedbackPanel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -37,6 +38,8 @@ public class HomePage extends WebPage {
     Button alignCenter;
     Button alignJustify;
     Button saveDB;
+    Button loadDB;
+    TextField nameField;
     TextArea uiText;
     UIText text = new UIText();
 
@@ -67,7 +70,6 @@ public class HomePage extends WebPage {
         //formatting buttons
         form.add(populateFontDropDownChoice(text));
         form.add(populateSizeDropDownChoice(text));
-        uiText.add(AttributeModifier.append("style", styleModel));
         form.add(boldButton);
         form.add(italicButton);
         form.add(underlineButton);
@@ -75,8 +77,12 @@ public class HomePage extends WebPage {
         form.add(alignLeft);
         form.add(alignJustify);
         form.add(saveDB);
+        form.add(loadDB);
+        form.add(nameField);
         // text area
+        uiText.add(AttributeModifier.append("style", styleModel));
         form.add(uiText);
+
         add(form);
         // to add default values
         updateStyleModel();
@@ -135,6 +141,28 @@ public class HomePage extends WebPage {
                 service.persistText(text);
             }
         };
+
+        loadDB = new Button("loadDBButton") {
+            @Override
+            public void onSubmit() {
+                try{
+                    text = service.findByName(nameField.getInputName());
+                } catch (Exception e) {
+                    addOrReplace(new ComponentFeedbackPanel("feedback", nameField.setRequired(true)));
+                }
+                updateStyleModel();
+            }
+        };
+
+        nameField = new TextField("name");
+        nameField.add(new AjaxFormComponentUpdatingBehavior("onkeyup") {
+                          @Override
+                          protected void onUpdate(AjaxRequestTarget target) {
+                              Object input = nameField.getConvertedInput();
+                              text.setName(StringUtils.isEmpty(input) ? "" : input.toString());
+                          }
+                      }
+        );
 
         uiText = new TextArea<String>("uiText", Model.of(""));
         uiText.add(new AjaxFormComponentUpdatingBehavior("onkeyup") {

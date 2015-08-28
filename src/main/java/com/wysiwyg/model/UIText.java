@@ -31,7 +31,7 @@ public class UIText implements Serializable {
     @Column(name = "UI_TEXT", nullable = false)
     private String text;
 
-    @Column(name = "NAME_TEXT", nullable = false)
+    @Column(name = " o mai p", nullable = false)
     private String name;
 
     @Transient

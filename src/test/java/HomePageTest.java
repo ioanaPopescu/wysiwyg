@@ -66,6 +66,7 @@ public class HomePageTest {
         assertFalse(homePage.getText().isItalic());
         FormTester formTester = wicketTester.newFormTester("form");
         formTester.setValue("italicButton", "whatever");
+        formTester.setValue("name", "nameTest");
         formTester.submit();
         assertTrue(homePage.getText().isItalic());
         assertTrue(homePage.getStyleModel().getObject().contains(StyleConstants.ITALIC));
@@ -76,6 +77,7 @@ public class HomePageTest {
         assertFalse(homePage.getText().isUnderline());
         FormTester formTester = wicketTester.newFormTester("form");
         formTester.setValue("underlineButton", "whatever");
+        formTester.setValue("name", "nameTest");
         formTester.submit();
         assertTrue(homePage.getText().isUnderline());
         assertTrue(homePage.getStyleModel().getObject().contains(StyleConstants.UNDERLINE));
